@@ -1,16 +1,29 @@
+/* eslint-disable no-var */
+/* eslint-disable consistent-return */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from 'react';
 import { Jumbotron } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
-import Login from './LogIn';
-import { setLogin } from '../actions/todolist';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+import Login from './LogIn';
+
 
 const App = () => {
-
-
   const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [passWord, setPassword] = useState('');
+
+  // 設置時間過久自動登出
+  useEffect(() => {
+    if (showAdminBoard !== false) {
+      const timeout = setTimeout(() => {
+        Swal.fire('Oops...', 'You have been idling so long', 'error');
+        setShowAdminBoard(false);
+      }, 1000 * 60 * 60);
+      return () => clearTimeout(timeout);
+    }
+  }, [showAdminBoard]);
 
   const openLogin = () => {
     setShowLogin(true);
@@ -18,15 +31,30 @@ const App = () => {
 
   const closeLogin = () => {
     setShowLogin(false);
+    setUserName('');
+    setPassword('');
   };
 
   const logout = () => {
     setShowAdminBoard(false);
+    Swal.fire('Bye', 'Hope to meet you again', 'success');
+  };
+
+  // 改變使用者裡面的值
+  const changeUsername = () => {
+    const username = window.event.target.value;
+    setUserName(username);
+  };
+
+  // 修改密碼裡面的值
+  const changePassword = () => {
+    const password = window.event.target.value;
+    setPassword(password);
   };
 
   const check = () => {
-    var username = 'Rock';
-    var password = '1234';
+    var username = userName;
+    var password = passWord;
     axios.post('http://localhost:3000/apis/admin', {
       Username: username,
       Password: password,
@@ -34,9 +62,16 @@ const App = () => {
       console.log(reponse.data);
       if (reponse.data === 'Success') {
         setShowAdminBoard(true);
+        Swal.fire('Hello', 'Welcome to come back', 'success');
+        setUserName('');
+        setPassword('');
+      } else {
+        Swal.fire('Oops...', 'Username or Password was wrong', 'error');
       }
     });
     closeLogin();
+    setUserName('');
+    setPassword('');
   };
 
   return (
@@ -49,18 +84,26 @@ const App = () => {
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav">
             {/* 利用NavLink代替Link可以在<a>裡面設定classname */}
-            <li className="nav-item"><a className="nav-link">文章列表</a></li>
+            <li className="nav-item"><a href="#" className="nav-link">文章列表</a></li>
             {showAdminBoard && (
-            <li className="nav-item"><a className="nav-link">發表文章</a></li>
+            <li className="nav-item"><a href="#" className="nav-link">發表文章</a></li>
             )}
             {showAdminBoard && (
-            <li className="nav-item"><a className="nav-link">管理文章</a></li>
+            <li className="nav-item"><a href="#" className="nav-link">管理文章</a></li>
             )}
             {showAdminBoard ? (<li className="nav-item" id="login"><a href="#" className="nav-link" onClick={logout}>登出</a></li>) : (<li className="nav-item" id="login"><a href="#" className="nav-link" onClick={openLogin}>登入</a></li>)}
           </ul>
         </div>
       </nav>
-      <Login show={showLogin} closeLogin={closeLogin} check={check} />
+      <Login
+        show={showLogin}
+        closeLogin={closeLogin}
+        check={check}
+        changeUsername={changeUsername}
+        changePassword={changePassword}
+        username={userName}
+        password={passWord}
+      />
     </div>
   );
 };

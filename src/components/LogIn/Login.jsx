@@ -1,9 +1,11 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import Backdrop from '../Backdrop';
 
 const Login = (props) => {
-
-  const { show, closeLogin, check } = props;
+  const {
+    show, closeLogin, check, changeUsername, changePassword, username, password,
+  } = props;
   const style = {
     position: 'fixed',
     width: '20%',
@@ -27,12 +29,12 @@ const Login = (props) => {
       <div className="Modal" style={style}>
         <h2>管理者登入</h2>
         <p>使用者</p>
-        <input type="text" name="title" />
+        <input type="text" name="title" onChange={changeUsername} value={username} />
         <p>密碼</p>
-        <input type="text" name="passwd" />
+        <input type="text" name="passwd" onChange={changePassword} value={password} />
         <br />
-        <button className="btn btn-secondary" onClick={closeLogin}>關閉</button>
-        <button className="btn btn-success" onClick={check}>送出</button>
+        <button type="button" className="btn btn-secondary" onClick={closeLogin}>關閉</button>
+        <button type="button" className="btn btn-success" onClick={check}>送出</button>
       </div>
     </div>
   );
