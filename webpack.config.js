@@ -1,11 +1,12 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.jsx',
+  entry: ['@babel/polyfill', './src/index.jsx'],
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, './dist/'),
   },
+  resolve: { extensions: ['.js', '.jsx'] },
   module: {
     rules: [
       {
@@ -27,8 +28,8 @@ module.exports = {
         },
       },
       {
-        test: /\.(css)$/,
-        use: ['style-loader', 'css-loader'],
+        test: /\.(scss)$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
     ],
   },
