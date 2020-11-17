@@ -2,13 +2,32 @@
 /* eslint-disable no-underscore-dangle */
 import { combineReducers } from 'redux';
 import {
-  SET_POSTS, REMOVE_POST, UPDATE_POST, ADD_POST,
+  SET_POSTS, REMOVE_POST, UPDATE_POST, ADD_POST, SET_LOGIN, SET_LOGOUT,
 } from '../actions/actions';
 
 // 設定預設 state
 const defaultState = {
   posts: [],
+  admin: false,
 };
+
+// 檢驗網頁是否為登入狀態
+function check(state = defaultState, action) {
+  switch (action.type) {
+    case SET_LOGIN:
+      return {
+        ...state,
+        admin: true,
+      };
+    case SET_LOGOUT:
+      return {
+        ...state,
+        admin: false,
+      };
+    default:
+      return state;
+  }
+}
 
 // 底下每一個就是一個 reducer
 function posts(state = defaultState, action) {
@@ -17,7 +36,7 @@ function posts(state = defaultState, action) {
     case SET_POSTS:
       return {
         ...state,
-        posts: action.posts,
+        posts: action.payload.posts,
       };
 
     // 回傳刪除後的 state
@@ -44,7 +63,7 @@ function posts(state = defaultState, action) {
 
 // 其實有多個 reducer 才需要用這個
 const articleReducer = combineReducers({
-  posts,
+  posts, check,
 });
 
 export default articleReducer;

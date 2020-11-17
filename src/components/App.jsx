@@ -4,30 +4,35 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Switch, Route } from 'react-router-dom';
 import { Jumbotron } from 'react-bootstrap';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Login from './LogIn';
 import AllPosts from './AllPosts';
 import NewPost from './NewPost';
 import UpdatePost from './UpdatePost';
+import { setLogin, setLogout } from '../actions/actions';
 
 
 const App = () => {
-  const [showAdminBoard, setShowAdminBoard] = useState(false);
+  // const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [userName, setUserName] = useState('');
   const [passWord, setPassword] = useState('');
+  const admin = useSelector(state => state.check.admin);
+  const dispatch = useDispatch();
 
   // 設置時間過久自動登出
   useEffect(() => {
-    if (showAdminBoard !== false) {
+    if (admin !== false) {
       const timeout = setTimeout(() => {
         Swal.fire('Oops...', 'You have been idling so long', 'error');
-        setShowAdminBoard(false);
+        // setShowAdminBoard(false);
+        dispatch(setLogout());
       }, 1000 * 60 * 60);
       return () => clearTimeout(timeout);
     }
-  }, [showAdminBoard]);
+  }, [admin]);
 
   const openLogin = () => {
     setShowLogin(true);
@@ -40,7 +45,7 @@ const App = () => {
   };
 
   const logout = () => {
-    setShowAdminBoard(false);
+    dispatch(setLogout());
     Swal.fire('Bye', 'Hope to meet you again', 'success');
   };
 
@@ -65,7 +70,8 @@ const App = () => {
     }).then((reponse) => {
       console.log(reponse.data);
       if (reponse.data === 'Success') {
-        setShowAdminBoard(true);
+        // setShowAdminBoard(true);
+        dispatch(setLogin());
         Swal.fire('Hello', 'Welcome to come back', 'success');
         setUserName('');
         setPassword('');
@@ -89,21 +95,21 @@ const App = () => {
           <ul className="navbar-nav">
             {/* 利用NavLink代替Link可以在<a>裡面設定classname */}
             <li className="nav-item"><NavLink to="/posts" className="nav-link">文章列表</NavLink></li>
-            {showAdminBoard && (
+            {admin && (
             <li className="nav-item"><NavLink to="/new_post" className="nav-link">發表文章</NavLink></li>
             )}
-            {showAdminBoard && (
+            {admin && (
             <li className="nav-item"><NavLink to="/update_post" className="nav-link">管理文章</NavLink></li>
             )}
-            {showAdminBoard ? (<li className="nav-item" id="login"><a href="#" className="nav-link" onClick={logout}>登出</a></li>) : (<li className="nav-item" id="login"><a href="#" className="nav-link" onClick={openLogin}>登入</a></li>)}
+            {admin ? (<li className="nav-item" id="login"><a href="#" className="nav-link" onClick={logout}>登出</a></li>) : (<li className="nav-item" id="login"><a href="#" className="nav-link" onClick={openLogin}>登入</a></li>)}
           </ul>
         </div>
       </nav>
       <Switch>
         <Route exact path="/" component={AllPosts} />
         <Route path="/posts" component={AllPosts} />
-        <Route path="/new_post" component={NewPost} />
-        <Route path="/update_post" component={UpdatePost} />
+        <Route exact path="/new_post" component={NewPost} />
+        <Route exact path="/update_post" component={UpdatePost} />
       </Switch>
       <Login
         show={showLogin}

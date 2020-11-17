@@ -2,7 +2,9 @@
 import React, { useState, useEffect } from 'react';
 
 const Post = (props) => {
-  const { functions } = props;
+  const {
+    functions, title, content, date,
+  } = props;
   const [change, setChange] = useState(false);
   const [guest, setGuest] = useState(true);
   useEffect(() => {
@@ -16,8 +18,9 @@ const Post = (props) => {
   }, [change]);
   return (
     <tr>
-      <td>Hello</td>
-      <td>How are you</td>
+      <td>{title}</td>
+      <td>{content}</td>
+      <td>{date}</td>
       <td>
         {guest && (<button type="button" className="btn btn-info">閱讀</button>)}
         {guest && (<button type="button" className="btn btn-secondary">留言</button>)}
