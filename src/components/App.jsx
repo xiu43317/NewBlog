@@ -2,10 +2,14 @@
 /* eslint-disable consistent-return */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from 'react';
+import { NavLink, Switch, Route } from 'react-router-dom';
 import { Jumbotron } from 'react-bootstrap';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Login from './LogIn';
+import AllPosts from './AllPosts';
+import NewPost from './NewPost';
+import UpdatePost from './UpdatePost';
 
 
 const App = () => {
@@ -84,17 +88,23 @@ const App = () => {
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav">
             {/* 利用NavLink代替Link可以在<a>裡面設定classname */}
-            <li className="nav-item"><a href="#" className="nav-link">文章列表</a></li>
+            <li className="nav-item"><NavLink to="/posts" className="nav-link">文章列表</NavLink></li>
             {showAdminBoard && (
-            <li className="nav-item"><a href="#" className="nav-link">發表文章</a></li>
+            <li className="nav-item"><NavLink to="/new_post" className="nav-link">發表文章</NavLink></li>
             )}
             {showAdminBoard && (
-            <li className="nav-item"><a href="#" className="nav-link">管理文章</a></li>
+            <li className="nav-item"><NavLink to="/update_post" className="nav-link">管理文章</NavLink></li>
             )}
             {showAdminBoard ? (<li className="nav-item" id="login"><a href="#" className="nav-link" onClick={logout}>登出</a></li>) : (<li className="nav-item" id="login"><a href="#" className="nav-link" onClick={openLogin}>登入</a></li>)}
           </ul>
         </div>
       </nav>
+      <Switch>
+        <Route exact path="/" component={AllPosts} />
+        <Route path="/posts" component={AllPosts} />
+        <Route path="/new_post" component={NewPost} />
+        <Route path="/update_post" component={UpdatePost} />
+      </Switch>
       <Login
         show={showLogin}
         closeLogin={closeLogin}

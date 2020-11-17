@@ -1,3 +1,7 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 
 const style = {
@@ -11,7 +15,7 @@ const style = {
 };
 
 const Backdrop = props => (
-  props.show ? <div style={style} onClick={props.closeModal}></div> : null
+  props.show ? <div style={style} onClick={props.closeModal} /> : null
 
 );
 
