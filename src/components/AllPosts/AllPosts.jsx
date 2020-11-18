@@ -25,19 +25,26 @@ const AllPosts = () => {
     getData();
   }, []);
   return (
-    <table className="table table-bordered">
-      <thead>
-        <tr>
-          <th>標題</th>
-          <th>內容</th>
-          <th>日期</th>
-          <th>操作</th>
-        </tr>
-      </thead>
-      <tbody>
-        {posts.map(post => (<Post id={post.id} title={post.Username} content={post.Article} date={post.CreateDate} functions="guest" />))}
-      </tbody>
-    </table>
+    <div>
+      <h3 className="title">
+        一共有
+        {posts.length}
+        篇文章
+      </h3>
+      <table className="table table-bordered">
+        <thead>
+          <tr>
+            <th>標題</th>
+            <th>內容</th>
+            <th>日期</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          {posts.map(post => (<Post id={post.id} title={post.Username} content={post.Article} date={post.CreateDate} functions="guest" />))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

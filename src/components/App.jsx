@@ -11,6 +11,7 @@ import Login from './LogIn';
 import AllPosts from './AllPosts';
 import NewPost from './NewPost';
 import UpdatePost from './UpdatePost';
+import ReadPost from './ReadPost';
 import { setLogin, setLogout } from '../actions/actions';
 
 
@@ -34,33 +35,35 @@ const App = () => {
     }
   }, [admin]);
 
+  // 開啟登入對話框
   const openLogin = () => {
     setShowLogin(true);
   };
-
+  // 關閉登入對話框
   const closeLogin = () => {
     setShowLogin(false);
     setUserName('');
     setPassword('');
   };
-
+  // 設置LogOut功能以及警告視窗
   const logout = () => {
     dispatch(setLogout());
     Swal.fire('Bye', 'Hope to meet you again', 'success');
   };
 
-  // 改變使用者裡面的值
+  // 改變使用者欄裡面的值
   const changeUsername = () => {
     const username = window.event.target.value;
     setUserName(username);
   };
 
-  // 修改密碼裡面的值
+  // 改變密碼欄裡面的值
   const changePassword = () => {
     const password = window.event.target.value;
     setPassword(password);
   };
 
+  // 向伺服器要求帳密資訊核對
   const check = () => {
     var username = userName;
     var password = passWord;
@@ -71,8 +74,10 @@ const App = () => {
       console.log(reponse.data);
       if (reponse.data === 'Success') {
         // setShowAdminBoard(true);
+        // 核對成功後將admin值改成true
         dispatch(setLogin());
         Swal.fire('Hello', 'Welcome to come back', 'success');
+        // 清空對話框裡面的值
         setUserName('');
         setPassword('');
       } else {
@@ -80,6 +85,7 @@ const App = () => {
       }
     });
     closeLogin();
+    // 關閉後也是清除對話框的值
     setUserName('');
     setPassword('');
   };
@@ -110,6 +116,7 @@ const App = () => {
         <Route path="/posts" component={AllPosts} />
         <Route exact path="/new_post" component={NewPost} />
         <Route exact path="/update_post" component={UpdatePost} />
+        <Route exact path="/read_post" component={ReadPost} />
       </Switch>
       <Login
         show={showLogin}
