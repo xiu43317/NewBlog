@@ -2,7 +2,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 const NewPost = () => {
   const admin = useSelector(state => state.check.admin);
@@ -11,6 +12,7 @@ const NewPost = () => {
   }
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const history = useHistory();
   const posts = useSelector(state => state.posts.posts);
 
   const onChange = (e) => {
@@ -19,6 +21,15 @@ const NewPost = () => {
 
   const onContentInput = (e) => {
     setContent(e.target.value);
+  };
+
+  const click = () => {
+    axios.post('http://localhost:3000/apis/add', { Name: title, Content: content }).then((response) => {
+      console.log(response);
+    }).catch((error) => {
+      console.log(error);
+    });
+    history.push('/');
   };
 
   return (
@@ -37,7 +48,7 @@ const NewPost = () => {
         <br />
         <textarea onChange={onContentInput} value={content} />
       </div>
-      <button type="button" className="btn btn-dark">送出</button>
+      <button type="button" className="btn btn-dark" onClick={click}>送出</button>
     </form>
   );
 };

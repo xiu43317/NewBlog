@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
@@ -35,14 +36,11 @@ const AllPosts = () => {
         <thead>
           <tr>
             <th>標題</th>
-            <th>內容</th>
-            <th>日期</th>
+            <th>創建日期</th>
             <th>操作</th>
           </tr>
         </thead>
-        <tbody>
-          {posts.map(post => (<Post id={post.id} title={post.Username} content={post.Article} date={post.CreateDate} functions="guest" />))}
-        </tbody>
+        {posts.map(post => (<Post id={post._id} title={post.Username} content={post.Article} date={post.CreateDate} functions="guest" />))}
       </table>
     </div>
   );

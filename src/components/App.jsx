@@ -116,7 +116,7 @@ const App = () => {
         <Route path="/posts" component={AllPosts} />
         <Route exact path="/new_post" component={NewPost} />
         <Route exact path="/update_post" component={UpdatePost} />
-        <Route exact path="/read_post" component={ReadPost} />
+        <Route exact path="/read_post/:id" component={ReadPost} />
       </Switch>
       <Login
         show={showLogin}
