@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
@@ -20,8 +21,8 @@ const Post = (props) => {
     }
   }, [change]);
   const showUpdate = () => {
-    const { id, update } = props;
-    update(id);
+    const { id, update, title, content } = props;
+    update(id, title, content);
   };
   const deleteArticle = () => {
     const { id, remove } = props;
@@ -57,7 +58,7 @@ const Post = (props) => {
         <td>{title}</td>
         <td>{dateString}</td>
         <td>
-          {guest && (<button type="button" className="btn btn-secondary" onClick={showContent}>{readTitle ? '收合' : '閱讀'}</button>)}
+          <button type="button" className="btn btn-secondary" onClick={showContent}>{readTitle ? '收合' : '閱讀'}</button>
           {guest && (<a type="button" className="btn btn-warning" href={`#/read_post/${id}`}>留言</a>)}
           {change && (<button type="button" className="btn btn-danger" onClick={deleteArticle}>刪除</button>)}
           {change && (<button type="button" className="btn btn-primary" onClick={showUpdate}>更新</button>)}

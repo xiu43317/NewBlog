@@ -1,11 +1,12 @@
+/* eslint-disable max-len */
 /* eslint-disable no-underscore-dangle */
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { Button, Modal } from 'react-bootstrap';
 import axios from 'axios';
 import Post from '../Post';
-import { removePost } from '../../actions/actions';
+import { removePost, updatePost } from '../../actions/actions';
+import UpdateModal from '../UpdateModal';
 
 const UpdatePost = () => {
   const posts = useSelector(state => state.posts.posts);
@@ -13,11 +14,15 @@ const UpdatePost = () => {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [aid, setAid] = useState('');
+  const [atitle, setTitle] = useState('');
+  const [acontent, setContent] = useState('');
 
   const handleClose = () => setShow(false);
-  const handleShow = (id) => {
+  const handleShow = (id, title, content) => {
     setShow(true);
     setAid(id);
+    setTitle(title);
+    setContent(content);
   };
   const onRemove = (id) => {
     // 從資料庫中移除
@@ -32,6 +37,40 @@ const UpdatePost = () => {
   if (admin !== true) {
     return <Redirect to="/posts" />;
   }
+
+  // 更新資料
+  const updateSend = () => {
+    // 更改目前頁面的狀態在丟進store
+    for (let i = 0; i < posts.length; i += 1) {
+      if (posts[i]._id === aid) {
+        posts[i].Username = atitle;
+        posts[i].Article = acontent;
+      }
+    }
+    dispatch(updatePost(posts));
+    console.log(posts);
+    axios.post(`http://localhost:3000/apis/update/${aid}`, {
+      Title: atitle,
+      Content: acontent,
+    })
+      .then((response) => {
+        console.log(response.data);
+      }).catch((error) => {
+        console.log(error);
+      });
+    handleClose();
+  };
+
+  // 改變標題裡面的值
+  const changeTitle = () => {
+    const title = window.event.target.value;
+    setTitle(title);
+  };
+  // 修改內容裡面的值
+  const changeContent = () => {
+    const content = window.event.target.value;
+    setContent(content);
+  };
   return (
     <div>
       <h3 className="title">
@@ -49,23 +88,7 @@ const UpdatePost = () => {
         </thead>
         {posts.map(post => (<Post id={post._id} title={post.Username} content={post.Article} date={post.CreateDate} functions="modify" update={handleShow} remove={onRemove} />))}
       </table>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>
-            ID=
-            {aid}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <UpdateModal show={show} handleClose={handleClose} id={aid} title={atitle} content={acontent} titleChange={changeTitle} contentChange={changeContent} send={updateSend} />
     </div>
   );
 };
