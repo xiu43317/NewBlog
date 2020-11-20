@@ -6,6 +6,9 @@ export const ADD_POST = 'ADD_POST';
 export const SET_LOGIN = 'SET_LOGIN';
 export const SET_LOGOUT = 'SET_LOGOUT';
 
+export const SET_COMMENTS = 'SET_COMMETS';
+export const REMOVE_COMMENT = 'REMOVE_COMMENT';
+
 /*
  * action creators
  */
@@ -26,6 +29,13 @@ export function addPost(posts) {
   return { type: ADD_POST, posts };
 }
 
+export function setComments(comments) {
+  return { type: SET_COMMENTS, comments };
+}
+
+export function removeComment(id) {
+  return { type: REMOVE_COMMENT, id };
+}
 export function setLogin() {
   return { type: SET_LOGIN };
 }

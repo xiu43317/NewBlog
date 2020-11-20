@@ -97,7 +97,10 @@ const App = () => {
       </Jumbotron>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <a className="navbar-brand">my blog</a>
-        <div className="collapse navbar-collapse">
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon" />
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <ul className="navbar-nav">
             {/* 利用NavLink代替Link可以在<a>裡面設定classname */}
             <li className="nav-item"><NavLink to="/posts" className="nav-link">文章列表</NavLink></li>
@@ -111,6 +114,7 @@ const App = () => {
           </ul>
         </div>
       </nav>
+      &nbsp;
       <Switch>
         <Route exact path="/" component={AllPosts} />
         <Route path="/posts" component={AllPosts} />

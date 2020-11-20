@@ -1,13 +1,15 @@
+/* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
 import { combineReducers } from 'redux';
 import {
-  SET_POSTS, REMOVE_POST, UPDATE_POST, ADD_POST, SET_LOGIN, SET_LOGOUT,
+  SET_POSTS, REMOVE_POST, UPDATE_POST, ADD_POST, SET_LOGIN, SET_LOGOUT, SET_COMMENTS, REMOVE_COMMENT,
 } from '../actions/actions';
 
 // 設定預設 state
 const defaultState = {
   posts: [],
+  comments: [],
   admin: false,
 };
 
@@ -61,9 +63,28 @@ function posts(state = defaultState, action) {
   }
 }
 
+// 操作留言狀態
+function comments(state = defaultState, action) {
+  switch (action.type) {
+    case SET_COMMENTS:
+      return {
+        ...state,
+        comments: action.comments,
+      };
+
+    case REMOVE_COMMENT:
+      return {
+        ...state,
+        comments: state.comments.filter(comment => comment._id !== action.id),
+      };
+    default:
+      return state;
+  }
+}
+
 // 其實有多個 reducer 才需要用這個
 const articleReducer = combineReducers({
-  posts, check,
+  posts, check, comments,
 });
 
 export default articleReducer;

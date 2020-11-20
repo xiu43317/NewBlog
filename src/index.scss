@@ -1,16 +1,17 @@
 #login{
     left: 90%;
     position: absolute;
+}
 
+#removeMessage{
+    float: right;
 }
 
 textarea{
-    width: 90%;
-    height: 300px;
+    overflow: auto;
 }
 
-input{
-    width: 90%;
+#messageDate{
+    float:right;
 }
-
 @import "~bootstrap/scss/bootstrap";
