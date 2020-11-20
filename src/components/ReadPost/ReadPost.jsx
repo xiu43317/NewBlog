@@ -21,7 +21,6 @@ const ReadPost = () => {
   const style = {
     width: '70%',
     marginLeft: '15%',
-    textAlign: 'center',
     overflow: 'auto',
   };
 
@@ -70,11 +69,11 @@ const ReadPost = () => {
       Comment: message,
     })
       .then((response) => {
+        getMessage();
         console.log(response.data);
       }).catch((error) => {
         console.log(error);
       });
-    getMessage();
     setMessage('');
     setVisitor('');
   };

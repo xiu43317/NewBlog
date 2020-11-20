@@ -6,6 +6,9 @@ import { Button, Modal } from 'react-bootstrap';
 const UpdateModal = (props) => {
   // eslint-disable-next-line no-unused-vars
   const { show, handleClose, id, title, content, titleChange, contentChange, send } = props;
+  const style = {
+    width: '100%',
+  };
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -15,11 +18,11 @@ const UpdateModal = (props) => {
       </Modal.Header>
       <Modal.Body>
         <p>標題</p>
-        <input type="text" value={title} onChange={titleChange} />
+        <input style={style} type="text" value={title} onChange={titleChange} />
         <br />
         <br />
         <p>內容</p>
-        <textarea type="text" value={content} onChange={contentChange} />
+        <textarea rows="5" style={style} type="text" value={content} onChange={contentChange} />
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
