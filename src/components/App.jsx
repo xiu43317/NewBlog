@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, Switch, Route } from 'react-router-dom';
 import { Jumbotron } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
+import { FaArrowCircleUp } from 'react-icons/fa';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Login from './LogIn';
@@ -23,6 +24,7 @@ const App = () => {
   const admin = useSelector(state => state.check.admin);
   const dispatch = useDispatch();
   const [showMenu, setMenu] = useState('');
+  const [showScroll, setShowScroll] = useState(false);
 
   // 設置時間過久自動登出
   useEffect(() => {
@@ -35,6 +37,20 @@ const App = () => {
       return () => clearTimeout(timeout);
     }
   }, [admin]);
+
+  const checkScrollTop = () => {
+    if (!showScroll && window.pageYOffset > 400) {
+      setShowScroll(true);
+    } else if (showScroll && window.pageYOffset <= 400) {
+      setShowScroll(false);
+    }
+  };
+
+  const scrollTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  window.addEventListener('scroll', checkScrollTop);
 
   const toggleMenu = () => {
     if (showMenu === '') {
@@ -142,6 +158,7 @@ const App = () => {
         username={userName}
         password={passWord}
       />
+      <FaArrowCircleUp className="scrollTop" onClick={scrollTop} style={{height: 40, display: showScroll ? 'flex' : 'none' }} />
     </div>
   );
 };
