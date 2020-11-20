@@ -22,6 +22,7 @@ const App = () => {
   const [passWord, setPassword] = useState('');
   const admin = useSelector(state => state.check.admin);
   const dispatch = useDispatch();
+  const [showMenu, setMenu] = useState('');
 
   // 設置時間過久自動登出
   useEffect(() => {
@@ -34,6 +35,14 @@ const App = () => {
       return () => clearTimeout(timeout);
     }
   }, [admin]);
+
+  const toggleMenu = () => {
+    if (showMenu === '') {
+      setMenu('show');
+    } else {
+      setMenu('');
+    }
+  };
 
   // 開啟登入對話框
   const openLogin = () => {
@@ -97,11 +106,11 @@ const App = () => {
       </Jumbotron>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <a className="navbar-brand">my blog</a>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <button className="navbar-toggler" type="button" onClick={toggleMenu}>
           <span className="navbar-toggler-icon" />
         </button>
-        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <ul className="navbar-nav">
+        <div className={`collapse navbar-collapse ${showMenu}`}>
+          <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
             {/* 利用NavLink代替Link可以在<a>裡面設定classname */}
             <li className="nav-item"><NavLink to="/posts" className="nav-link">文章列表</NavLink></li>
             {admin && (
@@ -110,7 +119,9 @@ const App = () => {
             {admin && (
             <li className="nav-item"><NavLink to="/update_post" className="nav-link">管理文章</NavLink></li>
             )}
-            {admin ? (<li className="nav-item" id="login"><a href="#" className="nav-link" onClick={logout}>登出</a></li>) : (<li className="nav-item" id="login"><a href="#" className="nav-link" onClick={openLogin}>登入</a></li>)}
+          </ul>
+          <ul className="navbar-nav my-2 my-lg-0">
+            {admin ? (<li className="nav-item" id="login"><a href="#" className="nav-link" onClick={logout}>登出</a></li>) : (<li className="nav-item" id="login"><a href="#" className="nav-link my-2 my-sm-0" onClick={openLogin}>登入</a></li>)}
           </ul>
         </div>
       </nav>

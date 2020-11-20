@@ -32,6 +32,11 @@ const NewPost = () => {
     history.push('/');
   };
 
+  const style = {
+    width: '100%',
+    height: '200px',
+  };
+
   return (
     <form>
       <h3 className="title">
@@ -46,7 +51,7 @@ const NewPost = () => {
       <div className="form-group">
         <label>內容</label>
         <br />
-        <textarea onChange={onContentInput} value={content} />
+        <textarea onChange={onContentInput} value={content} style={style} />
       </div>
       <button type="button" className="btn btn-dark" onClick={click}>送出</button>
     </form>

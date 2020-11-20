@@ -16,8 +16,11 @@ const MessageBoard = (props) => {
   const click = () => {
     history.goBack();
   };
+  const align = {
+    marginLeft: '10%',
+  };
   return (
-    <div>
+    <div style={align}>
       <form className="form-inline">
         <span className="mr-sm-2">留言者：</span>
         {admin ? (<input type="text" value="Rock" className="form-control mb-2 mr-sm-2" />) : (<input onChange={changeAuthor} type="text" placeholder="訪客" className="form-control mb-2 mr-sm-2" value={author} />)}

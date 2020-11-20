@@ -21,7 +21,18 @@ const ReadPost = () => {
   const style = {
     width: '70%',
     marginLeft: '15%',
+    textAlign: 'center',
     overflow: 'auto',
+  };
+
+  const article = {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    /* 只對英文起作用，以字母作為換行依據 */
+    wordBreak: 'break-all',
+    /* 只對英文起作用，以單詞作為換行依據 */
+    wordWrap: 'break-word',
+    whiteSpace: 'nowrap',
   };
   const changeAuthor = (e) => {
     const visitor = e.target.value;
@@ -80,7 +91,8 @@ const ReadPost = () => {
   return (
     <div style={style}>
       <br />
-      <h4>{`標題： ${post[0].Username} ㄧ共有${comments.length}則留言`}</h4>
+      <h4 style={article}>{`標題： ${post[0].Username}`}</h4>
+      <p>{`ㄧ共有${comments.length}則留言`}</p>
       <hr />
       <MessageBoard changeAuthor={changeAuthor} author={visitor} changeMessage={changeMessage} message={message} send={send} />
       {comments.map(comment => (<Messages id={comment._id} author={comment.Vistor} message={comment.Comment} date={comment.CreateDate} remove={removeMessage} />))}
