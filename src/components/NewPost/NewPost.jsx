@@ -7,14 +7,14 @@ import axios from 'axios';
 
 const NewPost = () => {
   const admin = useSelector(state => state.check.admin);
-  if (admin !== true) {
-    return (<Redirect to="/posts" />);
-  }
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const history = useHistory();
   const posts = useSelector(state => state.posts.posts);
 
+  if (admin !== true) {
+    return (<Redirect to="/posts" />);
+  }
   const onChange = (e) => {
     setTitle(e.target.value);
   };
@@ -39,7 +39,7 @@ const NewPost = () => {
 
   return (
     <form>
-      <h3 className="title">
+      <h3 className="title" align="center">
         一共有
         {posts.length}
         篇文章

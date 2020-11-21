@@ -1,3 +1,4 @@
+/* eslint-disable no-script-url */
 /* eslint-disable no-var */
 /* eslint-disable consistent-return */
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -118,10 +119,10 @@ const App = () => {
   return (
     <div>
       <Jumbotron>
-        <h1>My Blog</h1>
+        <h1 align="center"> Rock`s blog</h1>
       </Jumbotron>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand">my blog</a>
+        <a className="navbar-brand" href="#">首頁</a>
         <button className="navbar-toggler" type="button" onClick={toggleMenu}>
           <span className="navbar-toggler-icon" />
         </button>
@@ -137,7 +138,7 @@ const App = () => {
             )}
           </ul>
           <ul className="navbar-nav my-2 my-lg-0">
-            {admin ? (<li className="nav-item" id="login"><a href="#" className="nav-link" onClick={logout}>登出</a></li>) : (<li className="nav-item" id="login"><a href="#" className="nav-link my-2 my-sm-0" onClick={openLogin}>登入</a></li>)}
+            {admin ? (<li className="nav-item" id="login"><a href="javascript:void(0)" className="nav-link" onClick={logout}>登出</a></li>) : (<li className="nav-item" id="login"><a href="javascript:void(0)" className="nav-link my-2 my-sm-0" onClick={openLogin}>登入</a></li>)}
           </ul>
         </div>
       </nav>

@@ -17,7 +17,7 @@ const MessageBoard = (props) => {
     history.goBack();
   };
   const align = {
-    marginLeft: '10%',
+    textAlign: 'center',
   };
   return (
     <div style={align}>

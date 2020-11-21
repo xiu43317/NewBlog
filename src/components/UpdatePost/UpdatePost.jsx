@@ -73,7 +73,7 @@ const UpdatePost = () => {
   };
   return (
     <div>
-      <h3 className="title">
+      <h3 className="title" align="center">
         一共有
         {posts.length}
         篇文章
