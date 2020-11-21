@@ -46,7 +46,7 @@ const NewPost = () => {
       </h3>
       <div className="form-group">
         <label>標題</label>
-        <input name="title" className="form-control" placeholder="title" value={title} onChange={onChange} />
+        <input name="title" className="form-control" value={title} onChange={onChange} />
       </div>
       <div className="form-group">
         <label>內容</label>

@@ -16,6 +16,7 @@ const UpdatePost = () => {
   const [aid, setAid] = useState('');
   const [atitle, setTitle] = useState('');
   const [acontent, setContent] = useState('');
+  const [search, setSearch] = useState('');
 
   const handleClose = () => setShow(false);
   const handleShow = (id, title, content) => {
@@ -71,12 +72,25 @@ const UpdatePost = () => {
     const content = window.event.target.value;
     setContent(content);
   };
+
+  const changeSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const searchResult = posts.map((post) => {
+    if (post.Username.indexOf(search) !== -1) {
+      return <Post id={post._id} title={post.Username} content={post.Article} date={post.CreateDate} functions="modify" update={handleShow} remove={onRemove} />;
+    }
+    return null;
+  });
   return (
     <div>
       <h3 className="title" align="center">
         一共有
         {posts.length}
         篇文章
+        &nbsp;
+        <input placeholder="搜尋標題" value={search} onChange={changeSearch} />
       </h3>
       <table className="table table-bordered">
         <thead>
@@ -86,7 +100,7 @@ const UpdatePost = () => {
             <th>操作</th>
           </tr>
         </thead>
-        {posts.map(post => (<Post id={post._id} title={post.Username} content={post.Article} date={post.CreateDate} functions="modify" update={handleShow} remove={onRemove} />))}
+        {searchResult}
       </table>
       <UpdateModal show={show} handleClose={handleClose} id={aid} title={atitle} content={acontent} titleChange={changeTitle} contentChange={changeContent} send={updateSend} />
     </div>
