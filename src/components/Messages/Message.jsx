@@ -7,8 +7,8 @@ const Messages = (props) => {
   const { author, message, date } = props;
   const dateString = new Date(date).toLocaleString();
   const deleteMessage = () => {
-    const { remove, id } = props;
-    remove(id);
+    const { remove, id, aid } = props;
+    remove(id, aid);
   };
   return (
     <div className="card">

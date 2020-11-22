@@ -1,13 +1,13 @@
 /* eslint-disable max-len */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-shadow */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import MessageBoard from '../MessageBoard';
 import Messages from '../Messages';
-import { setComments, removeComment } from '../../actions/actions';
+import { removeComment, addComment } from '../../actions/actions';
 
 const ReadPost = () => {
   const { id } = useParams();
@@ -15,9 +15,11 @@ const ReadPost = () => {
   const posts = useSelector(state => state.posts.posts);
   const dispatch = useDispatch();
   const comments = useSelector(state => state.comments.comments);
-  const post = posts.filter(post => post._id === id);
+  // eslint-disable-next-line eqeqeq
+  const post = posts.filter(post => post._id == id);
   const [visitor, setVisitor] = useState('');
   const [message, setMessage] = useState('');
+  const messages = comments.filter(comment => comment.MessageID === id);
   const style = {
     width: '70%',
     marginLeft: '15%',
@@ -43,19 +45,19 @@ const ReadPost = () => {
     setMessage(message);
   };
 
-  const getMessage = () => {
-    axios.get(`http://localhost:3000/apis/message/${id}`)
-      .then((response) => {
-        console.log(response.data);
-        dispatch(setComments(response.data));
-      }).catch((error) => {
-        console.log(error);
-      });
-  };
+  // const getMessage = () => {
+  //   axios.get(`http://localhost:3000/apis/message/${id}`)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       dispatch(setComments(response.data));
+  //     }).catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
-  useEffect(() => {
-    getMessage();
-  }, []);
+  // useEffect(() => {
+  //   getMessage();
+  // }, []);
 
   const send = () => {
     let author = '';
@@ -64,28 +66,32 @@ const ReadPost = () => {
     } else {
       author = visitor;
     }
-    axios.post(`http://localhost:3000/apis/comment/${id}`, {
-      Vistor: author,
-      Comment: message,
-    })
-      .then((response) => {
-        getMessage();
-        console.log(response.data);
-      }).catch((error) => {
-        console.log(error);
-      });
+    // axios.post(`http://localhost:3000/apis/comment/${id}`, {
+    //   Vistor: author,
+    //   Comment: message,
+    // })
+    //   .then((response) => {
+    //     getMessage();
+    //     console.log(response.data);
+    //   }).catch((error) => {
+    //     console.log(error);
+    //   });
+    const date = new Date().toISOString();
+    dispatch(addComment({
+      _id: '', Vistor: author, Comment: message, MessageID: id, CreateDate: date,
+    }));
     setMessage('');
     setVisitor('');
   };
 
-  const removeMessage = (id) => {
-    axios.get(`http://localhost:3000/apis/deleteMessage/${id}`)
-      .then((response) => {
-        console.log(response.data);
-        dispatch(removeComment(id));
-      }).catch((error) => {
-        console.log(error);
-      });
+  const removeMessage = (id, aid) => {
+    // axios.get(`http://localhost:3000/apis/deleteMessage/${id}`)
+    //   .then((response) => {
+    //     console.log(response.data);
+    //   }).catch((error) => {
+    //     console.log(error);
+    //   });
+    dispatch(removeComment({ id, aid }));
   };
   return (
     <div style={style}>
@@ -94,7 +100,7 @@ const ReadPost = () => {
       <p>{`ㄧ共有${comments.length}則留言`}</p>
       <hr />
       <MessageBoard changeAuthor={changeAuthor} author={visitor} changeMessage={changeMessage} message={message} send={send} />
-      {comments.map(comment => (<Messages id={comment._id} author={comment.Vistor} message={comment.Comment} date={comment.CreateDate} remove={removeMessage} />))}
+      {messages.map(comment => (<Messages id={comment._id} aid={comment.MessageID} author={comment.Vistor} message={comment.Comment} date={comment.CreateDate} remove={removeMessage} />))}
     </div>
   );
 };

@@ -1,32 +1,12 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import Post from '../Post';
-import { setPosts } from '../../actions/actions';
 
 const AllPosts = () => {
   const posts = useSelector(state => state.posts.posts);
-  const dispatch = useDispatch();
   const [search, setSearch] = useState('');
   // 從資料庫中取得資料
-  const getData = () => {
-    axios.get('http://localhost:3000/apis/show')
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
-        // 再將資料為給store
-        dispatch(setPosts(data));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
-
   const changeSearch = (e) => {
     setSearch(e.target.value);
   };

@@ -27,6 +27,23 @@ const App = () => {
   const [showMenu, setMenu] = useState('');
   const [showScroll, setShowScroll] = useState(false);
 
+  // const getData = () => {
+  //   axios.get('http://localhost:3000/apis/show')
+  //     .then((response) => {
+  //       const { data } = response;
+  //       console.log(data);
+  //       // 再將資料為給store
+  //       dispatch(setPosts(data));
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+
+  useEffect(() => {
+  // getData();
+  }, []);
+
   // 設置時間過久自動登出
   useEffect(() => {
     if (admin !== false) {

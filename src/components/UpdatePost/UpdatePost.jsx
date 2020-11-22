@@ -3,9 +3,9 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 import Post from '../Post';
-import { removePost, updatePost } from '../../actions/actions';
+import { removePost, updatePost, removeAllComment } from '../../actions/actions';
 import UpdateModal from '../UpdateModal';
 
 const UpdatePost = () => {
@@ -27,13 +27,14 @@ const UpdatePost = () => {
   };
   const onRemove = (id) => {
     // 從資料庫中移除
-    axios.get(`http://localhost:3000/apis/delete/${id}`)
-      .then((response) => {
-        console.log(response.data);
-      }).catch((error) => {
-        console.log(error);
-      });
+    // axios.get(`http://localhost:3000/apis/delete/${id}`)
+    //   .then((response) => {
+    //     console.log(response.data);
+    //   }).catch((error) => {
+    //     console.log(error);
+    //   });
     dispatch(removePost(id));
+    dispatch(removeAllComment(id));
   };
   if (admin !== true) {
     return <Redirect to="/posts" />;
@@ -49,16 +50,16 @@ const UpdatePost = () => {
       }
     }
     dispatch(updatePost(posts));
-    console.log(posts);
-    axios.post(`http://localhost:3000/apis/update/${aid}`, {
-      Title: atitle,
-      Content: acontent,
-    })
-      .then((response) => {
-        console.log(response.data);
-      }).catch((error) => {
-        console.log(error);
-      });
+    // console.log(posts);
+    // axios.post(`http://localhost:3000/apis/update/${aid}`, {
+    //   Title: atitle,
+    //   Content: acontent,
+    // })
+    //   .then((response) => {
+    //     console.log(response.data);
+    //   }).catch((error) => {
+    //     console.log(error);
+    //   });
     handleClose();
   };
 

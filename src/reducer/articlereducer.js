@@ -3,7 +3,7 @@
 /* eslint-disable no-underscore-dangle */
 import { combineReducers } from 'redux';
 import {
-  SET_POSTS, REMOVE_POST, UPDATE_POST, ADD_POST, SET_LOGIN, SET_LOGOUT, SET_COMMENTS, REMOVE_COMMENT,
+  SET_POSTS, REMOVE_POST, UPDATE_POST, ADD_POST, SET_LOGIN, SET_LOGOUT, SET_COMMENTS, REMOVE_COMMENT, ADD_COMMENT, REMOVE_ALLCOMMENT,
 } from '../actions/actions';
 
 // 設定預設 state
@@ -53,11 +53,19 @@ function posts(state = defaultState, action) {
         posts: action.posts,
       };
     case ADD_POST:
-      action.posts._id = state.posts.length + 1;
+      if (state.posts.length === 0) {
+        action.posts._id = state.posts.length + 1;
+        return {
+          ...state,
+          posts: [action.posts, ...state.posts],
+        };
+      }
+      action.posts._id = state.posts[0]._id + 1;
       return {
         ...state,
-        posts: [...state.posts, action.posts],
+        posts: [action.posts, ...state.posts],
       };
+
     default:
       return state;
   }
@@ -72,10 +80,26 @@ function comments(state = defaultState, action) {
         comments: action.comments,
       };
 
+    case ADD_COMMENT:
+      if (state.comments.length === 0) {
+        action.comments._id = state.comments.length + 1;
+      } else {
+        action.comments._id = state.comments[0]._id + 1;
+      }
+      return {
+        ...state,
+        comments: [action.comments, ...state.comments],
+      };
+
     case REMOVE_COMMENT:
       return {
         ...state,
-        comments: state.comments.filter(comment => comment._id !== action.id),
+        comments: state.comments.filter(comment => comment._id !== action.comments.id || comment.MessageID !== action.comments.aid),
+      };
+    case REMOVE_ALLCOMMENT:
+      return {
+        ...state,
+        comments: state.comments.filter(comment => comment.MessageID !== (action.id).toString()),
       };
     default:
       return state;

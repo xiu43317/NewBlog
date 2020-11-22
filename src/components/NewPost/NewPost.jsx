@@ -1,15 +1,17 @@
 /* eslint-disable jsx-a11y/label-has-for */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
+import { addPost } from '../../actions/actions';
 
 const NewPost = () => {
   const admin = useSelector(state => state.check.admin);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const history = useHistory();
+  const dispatch = useDispatch();
   const posts = useSelector(state => state.posts.posts);
 
   if (admin !== true) {
@@ -24,11 +26,15 @@ const NewPost = () => {
   };
 
   const click = () => {
-    axios.post('http://localhost:3000/apis/add', { Name: title, Content: content }).then((response) => {
-      console.log(response);
-    }).catch((error) => {
-      console.log(error);
-    });
+    const date = new Date().toISOString();
+    dispatch(addPost({
+      _id: 0, Username: title, Article: content, CreateDate: date,
+    }));
+    // axios.post('http://localhost:3000/apis/add', { Name: title, Content: content }).then((response) => {
+    //   console.log(response);
+    // }).catch((error) => {
+    //   console.log(error);
+    // });
     history.push('/');
   };
 
