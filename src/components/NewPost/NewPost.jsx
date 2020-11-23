@@ -28,7 +28,7 @@ const NewPost = () => {
   const click = () => {
     const date = new Date().toISOString();
     dispatch(addPost({
-      _id: 0, Username: title, Article: content, CreateDate: date,
+      id: 0, Username: title, Article: content, CreateDate: date,
     }));
     // axios.post('http://localhost:3000/apis/add', { Name: title, Content: content }).then((response) => {
     //   console.log(response);

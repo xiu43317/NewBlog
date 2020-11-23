@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable max-len */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-shadow */
@@ -15,11 +16,12 @@ const ReadPost = () => {
   const posts = useSelector(state => state.posts.posts);
   const dispatch = useDispatch();
   const comments = useSelector(state => state.comments.comments);
+
   // eslint-disable-next-line eqeqeq
-  const post = posts.filter(post => post._id == id);
+  const post = posts.filter(post => post.id == id);
   const [visitor, setVisitor] = useState('');
   const [message, setMessage] = useState('');
-  const messages = comments.filter(comment => comment.MessageID === id);
+  const messages = comments.filter(comment => comment.MessageID == id);
   const style = {
     width: '70%',
     marginLeft: '15%',
@@ -78,7 +80,8 @@ const ReadPost = () => {
     //   });
     const date = new Date().toISOString();
     dispatch(addComment({
-      _id: '', Vistor: author, Comment: message, MessageID: id, CreateDate: date,
+      // eslint-disable-next-line radix
+      id: '', Vistor: author, Comment: message, MessageID: parseInt(id), CreateDate: date,
     }));
     setMessage('');
     setVisitor('');
@@ -97,10 +100,10 @@ const ReadPost = () => {
     <div style={style}>
       <br />
       <h4 style={article}>{`標題： ${post[0].Username}`}</h4>
-      <p>{`ㄧ共有${comments.length}則留言`}</p>
+      <p>{`ㄧ共有${messages.length}則留言`}</p>
       <hr />
       <MessageBoard changeAuthor={changeAuthor} author={visitor} changeMessage={changeMessage} message={message} send={send} />
-      {messages.map(comment => (<Messages id={comment._id} aid={comment.MessageID} author={comment.Vistor} message={comment.Comment} date={comment.CreateDate} remove={removeMessage} />))}
+      {messages.map(comment => (<Messages id={comment.id} aid={comment.MessageID} author={comment.Vistor} message={comment.Comment} date={comment.CreateDate} remove={removeMessage} />))}
     </div>
   );
 };

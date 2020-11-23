@@ -12,7 +12,7 @@ const AllPosts = () => {
   };
   const searchResult = posts.map((post) => {
     if (post.Username.indexOf(search) !== -1) {
-      return <Post id={post._id} title={post.Username} content={post.Article} date={post.CreateDate} functions="guest" />;
+      return <Post id={post.id} title={post.Username} content={post.Article} date={post.CreateDate} functions="guest" />;
     }
     return null;
   });

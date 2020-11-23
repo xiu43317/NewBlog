@@ -23,6 +23,7 @@ const MessageBoard = (props) => {
     <div style={align}>
       <form className="form-inline">
         <span className="mr-sm-2">留言者：</span>
+        {/** 為登入狀態便鎖定版主姓名不能更改 */}
         {admin ? (<input type="text" value="Rock" className="form-control mb-2 mr-sm-2" />) : (<input onChange={changeAuthor} type="text" placeholder="訪客大名" className="form-control mb-2 mr-sm-2" value={author} />)}
         <span className="mr-sm-2">內容：</span>
         <textarea className="form-control mb-2 mr-sm-2" type="text" onChange={changeMessage} value={message} rows="2" cols="20" wrap="hard" style={style} />

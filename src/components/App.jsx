@@ -2,7 +2,7 @@
 /* eslint-disable no-var */
 /* eslint-disable consistent-return */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, Switch, Route } from 'react-router-dom';
 import { Jumbotron } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
@@ -14,7 +14,9 @@ import AllPosts from './AllPosts';
 import NewPost from './NewPost';
 import UpdatePost from './UpdatePost';
 import ReadPost from './ReadPost';
-import { setLogin, setLogout } from '../actions/actions';
+import {
+  setLogin, setLogout, useUnload, setPosts, setComments,
+} from '../actions/actions';
 
 
 const App = () => {
@@ -26,22 +28,58 @@ const App = () => {
   const dispatch = useDispatch();
   const [showMenu, setMenu] = useState('');
   const [showScroll, setShowScroll] = useState(false);
+  const posts = useSelector(state => state.posts.posts);
+  const comments = useSelector(state => state.comments.comments);
+  const newPost = useRef();
+  newPost.current = { posts, comments };
 
-  // const getData = () => {
-  //   axios.get('http://localhost:3000/apis/show')
-  //     .then((response) => {
-  //       const { data } = response;
-  //       console.log(data);
-  //       // 再將資料為給store
-  //       dispatch(setPosts(data));
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
+  const getData = () => {
+    axios.get('http://localhost:3000/apis/setmessage')
+      .then((response) => {
+        const { data } = response;
+        console.log(data);
+        // 再將資料為給store
+        dispatch(setComments(data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    axios.get('http://localhost:3000/apis/show')
+      .then((response) => {
+        const { data } = response;
+        console.log(data);
+        // 再將資料為給store
+        dispatch(setPosts(data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const insertData = () => {
+    // const data = { blog: posts, comment: comments };
+    axios.post('http://localhost:3000/apis/updatebackend', newPost.current)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useUnload((e) => {
+    e.preventDefault();
+    e.returnValue = '';
+    insertData();
+    return '離開';
+  });
 
   useEffect(() => {
-  // getData();
+    getData();
+    // function confirmExit() {
+    //   return 'show warning';
+    // }
+    // window.onbeforeunload = confirmExit;
   }, []);
 
   // 設置時間過久自動登出
@@ -155,7 +193,7 @@ const App = () => {
             )}
           </ul>
           <ul className="navbar-nav my-2 my-lg-0">
-            {admin ? (<li className="nav-item" id="login"><a href="javascript:void(0)" className="nav-link" onClick={logout}>登出</a></li>) : (<li className="nav-item" id="login"><a href="javascript:void(0)" className="nav-link my-2 my-sm-0" onClick={openLogin}>登入</a></li>)}
+            {admin ? (<li className="nav-item" id="login"><a href="#" className="nav-link" onClick={logout}>登出</a></li>) : (<li className="nav-item" id="login"><a href="#" className="nav-link my-2 my-sm-0" onClick={openLogin}>登入</a></li>)}
           </ul>
         </div>
       </nav>

@@ -44,7 +44,7 @@ const UpdatePost = () => {
   const updateSend = () => {
     // 更改目前頁面的狀態在丟進store
     for (let i = 0; i < posts.length; i += 1) {
-      if (posts[i]._id === aid) {
+      if (posts[i].id === aid) {
         posts[i].Username = atitle;
         posts[i].Article = acontent;
       }
@@ -80,7 +80,7 @@ const UpdatePost = () => {
 
   const searchResult = posts.map((post) => {
     if (post.Username.indexOf(search) !== -1) {
-      return <Post id={post._id} title={post.Username} content={post.Article} date={post.CreateDate} functions="modify" update={handleShow} remove={onRemove} />;
+      return <Post id={post.id} title={post.Username} content={post.Article} date={post.CreateDate} functions="modify" update={handleShow} remove={onRemove} />;
     }
     return null;
   });

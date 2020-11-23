@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react';
+
 export const SET_POSTS = 'SET_POSTS';
 export const REMOVE_POST = 'REMOVE_POST';
 export const UPDATE_POST = 'UPDATE_POST';
@@ -54,3 +56,20 @@ export function setLogin() {
 export function setLogout() {
   return { type: SET_LOGOUT };
 }
+
+export const useUnload = (fn) => {
+  // eslint-disable-next-line max-len
+  const cb = useRef(fn); // init with fn, so that type checkers won't assume that current might be undefined
+
+  useEffect(() => {
+    cb.current = fn;
+  }, [fn]);
+
+  useEffect(() => {
+    const onUnload = cb.current;
+
+    window.addEventListener('beforeunload', onUnload);
+
+    return () => window.removeEventListener('beforeunload', onUnload);
+  }, []);
+};
