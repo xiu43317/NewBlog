@@ -2,6 +2,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 
 const Post = (props) => {
   const {
@@ -59,7 +60,7 @@ const Post = (props) => {
         <td>{dateString}</td>
         <td>
           <button type="button" className="btn btn-secondary" onClick={showContent}>{readTitle ? '收合' : '閱讀'}</button>
-          {guest && (<a type="button" className="btn btn-warning" href={`#/read_post/${id}`}>留言</a>)}
+          {guest && (<NavLink className="btn btn-warning" to={`/read_post/${id}`}>留言</NavLink>)}
           {change && (<button type="button" className="btn btn-danger" onClick={deleteArticle}>刪除</button>)}
           {change && (<button type="button" className="btn btn-primary" onClick={showUpdate}>更新</button>)}
         </td>

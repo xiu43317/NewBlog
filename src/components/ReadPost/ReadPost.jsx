@@ -3,7 +3,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-shadow */
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Redirect } from 'react-router-dom';
 // import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import MessageBoard from '../MessageBoard';
@@ -16,6 +16,12 @@ const ReadPost = () => {
   const posts = useSelector(state => state.posts.posts);
   const dispatch = useDispatch();
   const comments = useSelector(state => state.comments.comments);
+  const InvalidIdList = [];
+
+  // 列出目前有效的文章ID
+  for (let i = 0; i < posts.length; i += 1) {
+    InvalidIdList[i] = posts[i].id.toString();
+  }
 
   // eslint-disable-next-line eqeqeq
   const post = posts.filter(post => post.id == id);
@@ -96,6 +102,11 @@ const ReadPost = () => {
     //   });
     dispatch(removeComment({ id, aid }));
   };
+  // 所有條件設定好後到最後再渲染
+  if (InvalidIdList.indexOf(id) == -1 || posts == false || comments == false) {
+    return (<Redirect to="/posts" />);
+  }
+
   return (
     <div style={style}>
       <br />

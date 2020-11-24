@@ -56,22 +56,18 @@ const App = () => {
       });
   };
 
-  const insertData = () => {
-    // const data = { blog: posts, comment: comments };
-    axios.post('http://localhost:3000/apis/updatebackend', newPost.current)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  const insertData = () => axios.post('http://localhost:3000/apis/updatebackend', newPost.current)
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 
-  useUnload((e) => {
+  useUnload(async (e) => {
     e.preventDefault();
-    e.returnValue = '';
-    insertData();
-    return '離開';
+    e.returnValue = insertData();
+    // return '離開';
   });
 
   useEffect(() => {
