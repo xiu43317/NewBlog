@@ -4,7 +4,6 @@
 /* eslint-disable no-shadow */
 import React, { useState } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
-// import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import MessageBoard from '../MessageBoard';
 import Messages from '../Messages';
@@ -53,20 +52,6 @@ const ReadPost = () => {
     setMessage(message);
   };
 
-  // const getMessage = () => {
-  //   axios.get(`http://localhost:3000/apis/message/${id}`)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       dispatch(setComments(response.data));
-  //     }).catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   getMessage();
-  // }, []);
-
   const send = () => {
     let author = '';
     if (admin) {
@@ -74,16 +59,6 @@ const ReadPost = () => {
     } else {
       author = visitor;
     }
-    // axios.post(`http://localhost:3000/apis/comment/${id}`, {
-    //   Vistor: author,
-    //   Comment: message,
-    // })
-    //   .then((response) => {
-    //     getMessage();
-    //     console.log(response.data);
-    //   }).catch((error) => {
-    //     console.log(error);
-    //   });
     const date = new Date().toISOString();
     dispatch(addComment({
       // eslint-disable-next-line radix
@@ -94,16 +69,10 @@ const ReadPost = () => {
   };
 
   const removeMessage = (id, aid) => {
-    // axios.get(`http://localhost:3000/apis/deleteMessage/${id}`)
-    //   .then((response) => {
-    //     console.log(response.data);
-    //   }).catch((error) => {
-    //     console.log(error);
-    //   });
     dispatch(removeComment({ id, aid }));
   };
   // 所有條件設定好後到最後再渲染
-  if (InvalidIdList.indexOf(id) == -1 || posts == false || comments == false) {
+  if (InvalidIdList.indexOf(id) == -1 || posts == false) {
     return (<Redirect to="/posts" />);
   }
 

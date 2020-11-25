@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
-// import axios from 'axios';
 import { addPost } from '../../actions/actions';
 
 const NewPost = () => {
@@ -30,11 +29,6 @@ const NewPost = () => {
     dispatch(addPost({
       id: 0, Username: title, Article: content, CreateDate: date,
     }));
-    // axios.post('http://localhost:3000/apis/add', { Name: title, Content: content }).then((response) => {
-    //   console.log(response);
-    // }).catch((error) => {
-    //   console.log(error);
-    // });
     history.push('/');
   };
 
