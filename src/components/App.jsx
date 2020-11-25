@@ -7,7 +7,6 @@ import { NavLink, Switch, Route } from 'react-router-dom';
 import { Jumbotron } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { FaArrowCircleUp } from 'react-icons/fa';
-import axios from 'axios';
 import Swal from 'sweetalert2';
 import Login from './LogIn';
 import AllPosts from './AllPosts';
@@ -15,7 +14,7 @@ import NewPost from './NewPost';
 import UpdatePost from './UpdatePost';
 import ReadPost from './ReadPost';
 import {
-  setLogin, setLogout, useUnload, setPosts, setComments,
+  setLogin, setLogout,
 } from '../actions/actions';
 
 
@@ -32,51 +31,6 @@ const App = () => {
   const comments = useSelector(state => state.comments.comments);
   const newPost = useRef();
   newPost.current = { posts, comments };
-
-  const getData = () => {
-    axios.get('http://localhost:3000/apis/setmessage')
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
-        // 再將資料為給store
-        dispatch(setComments(data));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    axios.get('http://localhost:3000/apis/show')
-      .then((response) => {
-        const { data } = response;
-        console.log(data);
-        // 再將資料為給store
-        dispatch(setPosts(data));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const insertData = () => axios.post('http://localhost:3000/apis/updatebackend', newPost.current)
-    .then((response) => {
-      console.log(response.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-
-  useUnload(async (e) => {
-    e.preventDefault();
-    e.returnValue = insertData();
-    // return '離開';
-  });
-
-  useEffect(() => {
-    getData();
-    // function confirmExit() {
-    //   return 'show warning';
-    // }
-    // window.onbeforeunload = confirmExit;
-  }, []);
 
   // 設置時間過久自動登出
   useEffect(() => {
@@ -144,23 +98,17 @@ const App = () => {
   const check = () => {
     var username = userName;
     var password = passWord;
-    axios.post('http://localhost:3000/apis/admin', {
-      Username: username,
-      Password: password,
-    }).then((reponse) => {
-      console.log(reponse.data);
-      if (reponse.data === 'Success') {
-        // setShowAdminBoard(true);
-        // 核對成功後將admin值改成true
-        dispatch(setLogin());
-        Swal.fire('Hello', 'Welcome to come back', 'success');
-        // 清空對話框裡面的值
-        setUserName('');
-        setPassword('');
-      } else {
-        Swal.fire('Oops...', 'Username or Password was wrong', 'error');
-      }
-    });
+    if (username === 'Rock' && password === '1234') {
+      // setShowAdminBoard(true);
+      // 核對成功後將admin值改成true
+      dispatch(setLogin());
+      Swal.fire('Hello', 'Welcome to come back', 'success');
+      // 清空對話框裡面的值
+      setUserName('');
+      setPassword('');
+    } else {
+      Swal.fire('Oops...', 'Username or Password was wrong', 'error');
+    }
     closeLogin();
     // 關閉後也是清除對話框的值
     setUserName('');
