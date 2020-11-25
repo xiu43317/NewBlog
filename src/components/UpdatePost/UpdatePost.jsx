@@ -26,13 +26,6 @@ const UpdatePost = () => {
     setContent(content);
   };
   const onRemove = (id) => {
-    // 從資料庫中移除
-    // axios.get(`http://localhost:3000/apis/delete/${id}`)
-    //   .then((response) => {
-    //     console.log(response.data);
-    //   }).catch((error) => {
-    //     console.log(error);
-    //   });
     dispatch(removePost(id));
     dispatch(removeAllComment(id));
   };
@@ -50,16 +43,6 @@ const UpdatePost = () => {
       }
     }
     dispatch(updatePost(posts));
-    // console.log(posts);
-    // axios.post(`http://localhost:3000/apis/update/${aid}`, {
-    //   Title: atitle,
-    //   Content: acontent,
-    // })
-    //   .then((response) => {
-    //     console.log(response.data);
-    //   }).catch((error) => {
-    //     console.log(error);
-    //   });
     handleClose();
   };
 

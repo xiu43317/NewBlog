@@ -30,11 +30,6 @@ const NewPost = () => {
     dispatch(addPost({
       id: 0, Username: title, Article: content, CreateDate: date,
     }));
-    // axios.post('http://localhost:3000/apis/add', { Name: title, Content: content }).then((response) => {
-    //   console.log(response);
-    // }).catch((error) => {
-    //   console.log(error);
-    // });
     history.push('/');
   };
 
