@@ -50,6 +50,8 @@ const App = () => {
         console.log(data);
         // 再將資料為給store
         dispatch(setPosts(data));
+        const spinner = document.getElementById('spinner');
+        spinner.style.display = 'none';
       })
       .catch((error) => {
         console.log(error);
@@ -210,6 +212,7 @@ const App = () => {
         username={userName}
         password={passWord}
       />
+      <div className="spinner-border text-info" id="spinner" />
       <FaArrowCircleUp className="scrollTop" onClick={scrollTop} style={{ height: 40, display: showScroll ? 'flex' : 'none' }} />
     </div>
   );
