@@ -1,9 +1,12 @@
 # NewBlog
-<h4>React-class-component<p/>
 
-This is my first React work which was adapted from an IT forum in Taiwan. As a react beginner, I thought I should copy someone's example and turn it into my style. I have studied a lot of documents from the react official website and follow it's demonstrations. But I thought I still needed something to prove how much I knew about the react concepts. As a result, I decided to make a blog system with CRUD functions. This example just had Create and Delete functions at first, so I decided to add an Update function into this app. In addaition, I also changed some structures from the backend which was made by node.js. This work I didn't put it on my website because latter I finished another one which was edited with function component and I also put it on my website.
-<h4>Reference:</h4>
-<p>https://ithelp.ithome.com.tw/articles/10188246<p/>
-<p>https://reactjs.org/</P>
-<p>https://ithelp.ithome.com.tw/users/20106935/ironman/1651</P>
-<p>https://stackoverflow.com/</p>
+This project is using react hooks and many javascript skills. React hooks provides many methods to replace the original functions from class components, such as useState, useEffect, useRef, useContext... Those ways make react more simple and easy to arrange functions. I also use Redux to store data in the toppest layer so that for other components I just withdraw the data from store. With the way I can save much time to prevent to check all components' props. React just renders the component which changes it's state, so it doesn't need to reload all the page. In addition, Redux provides store like a small database on frontend. We don't need to load the data from backend, that can boost the speed for users' experience. As for backend, I use mongoose to replace the original mongodb from nodejs, it much clear and easy to read. Here I also provide a demonostration but without mongodb and nodejs backend, it just has frontend to show the React's function. All in all, in this project, I combine many materials what I learn before such as bootstrap, sass and some packages transformed from JQuery to React. It is also a RWD website, you can resize your window to observe what difference among different window width.Futhermore I add comment boxs to allow guests leave their comments on my blog 
+<p>Here is my website Link:https://rockchang.000webhostapp.com/testweb/#/</p>
+<p>Please enter username:'Rock'  password:'1234' to login this system.</p>
+<h4>Reference:<h4/>
+<p>https://reactjs.org/docs/hooks-overview.html</p>
+<p>https://medium.com/better-programming/create-a-scroll-to-top-arrow-using-react-hooks-18586890fedc</p>
+<p>https://ithelp.ithome.com.tw/articles/10206733</p>
+<p>https://tomchen60317.github.io/2020/01/22/react/React-Router-%E8%88%87-Hook-%E9%82%82%E9%80%85-2/<p/>
+<p>https://pjchender.github.io/2018/12/09/mongo-mongoose-%E6%93%8D%E4%BD%9C/</p>
+<p>https://www.kingstone.com.tw/basic/2013120355064/<p/>
