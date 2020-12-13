@@ -14,3 +14,19 @@ Please enter username:'Rock'  password:'1234' to login this system.
 <a href="https://tomchen60317.github.io/2020/01/22/react/React-Router-%E8%88%87-Hook-%E9%82%82%E9%80%85-2/">React Router 與 Hook 的邂逅<a/><br>
 <a href="https://pjchender.github.io/2018/12/09/mongo-mongoose-%E6%93%8D%E4%BD%9C/">[Mongo] Mongoose 操作</a><br>
 <a href="https://www.kingstone.com.tw/basic/2013120355064/">不一樣的Node.js：用JavaScript打造高效能的前後台網頁程式 第二版<a/>
+<hr>
+## Build Setup
+
+``` bash
+# install dependencies
+npm install
+
+# serve with hot reload at localhost:8080
+npm run dev
+
+# build for production with minification
+npm run build
+
+# build for production and view the bundle analyzer report
+npm run build --report
+```
